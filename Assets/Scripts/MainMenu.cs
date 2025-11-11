@@ -2,9 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+
+    public GameObject mainMenuUI;
+    public GameObject settingsUI;
+
+    void Start()
+    {
+        OpenMainMenu();
+    }
+
     public void StartGame()
     {
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(1, "GameScene"));
@@ -19,5 +29,17 @@ public class MainMenu : MonoBehaviour
     public void SceneLoad(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void OpenMainMenu()
+    {
+        settingsUI.SetActive(false);
+        mainMenuUI.SetActive(true);
+    }
+
+    public void OpenSettings()
+    {
+        mainMenuUI.SetActive(false);
+        settingsUI.SetActive(true);
     }
 }
