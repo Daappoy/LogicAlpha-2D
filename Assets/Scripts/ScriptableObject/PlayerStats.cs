@@ -7,4 +7,5 @@ public class PlayerStats : ScriptableObject
 {
     public int Health;
     public int Damage;
+    public Animator PlayerAnimator;
 }

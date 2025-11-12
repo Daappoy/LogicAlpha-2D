@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0242db82e440d44b062ca36aaa2193, type: 3}
   m_Name: Bat
   m_EditorClassIdentifier: 
-  enemyName: 
-  health: 0
-  damage: 0
+  enemyName: Bat
+  health: 100
+  damage: 10
+  enemyAnimator: {fileID: 0}

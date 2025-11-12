@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
-    public static SceneLoader
- Instance;
+    public static SceneLoader Instance;
     public Animator SceneTransisionAnimator;
 
     public void Start()
@@ -22,7 +21,7 @@ public class SceneLoader : MonoBehaviour
 
     public IEnumerator TransisionToScene(int transisionTime,string sceneName)
     {
-        // Debug.Log("Transision Started");
+        Debug.Log("Transision Started");
         SceneTransisionAnimator.SetTrigger("Start");
 
         yield return new WaitForSeconds(transisionTime + 0.5f);

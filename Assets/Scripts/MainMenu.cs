@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
 
     public GameObject mainMenuUI;
     public GameObject settingsUI;
+    public TextMeshProUGUI highScoreText;
 
     void Start()
     {
         OpenMainMenu();
+        int highscore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreText.text = highscore.ToString();
     }
 
     public void StartGame()
@@ -41,5 +45,11 @@ public class MainMenu : MonoBehaviour
     {
         mainMenuUI.SetActive(false);
         settingsUI.SetActive(true);
+    }
+
+    public void UpdateHighScore()
+    {
+        int highscore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreText.text = highscore.ToString();
     }
 }
