@@ -146,7 +146,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         UpdateHealthBars();
-        ActionsManager.ActionButtonOn();
     }
     //kalo musuh mati, actionnya bakal nyala lagi as soon as musuhnya di spawn
     public void WonRound()

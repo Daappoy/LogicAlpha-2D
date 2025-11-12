@@ -94,11 +94,11 @@ public class ActionsManager : MonoBehaviour
             // Debug.Log("Enemy wins!");
             yield return new WaitForSeconds(1.5f);
             ResetText();
-            
+            ActionButtonOn();
         }
     }
     
-    public void ActionButtonOn()
+    private void ActionButtonOn()
     {
         gameManager.currentState = GameManager.GameState.DecidingChoice;
         gameManager.UpdateUIBasedOnState();
