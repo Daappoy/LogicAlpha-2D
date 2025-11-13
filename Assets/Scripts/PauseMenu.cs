@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     public GameManager.GameState currentState;
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    public Button BackToMainMenuButton;
 
     void Start()
     {
@@ -25,20 +27,21 @@ public class PauseMenu : MonoBehaviour
     {
         if (GameIsPaused && !(currentState == GameManager.GameState.GameOver))
         {
-            pauseMenuUI.SetActive(false);
             Time.timeScale = 1f;
+            pauseMenuUI.SetActive(false);
             GameIsPaused = false;
         }
         else if (!GameIsPaused && !(currentState == GameManager.GameState.GameOver))
         {
-            pauseMenuUI.SetActive(true);
             Time.timeScale = 0f;
+            pauseMenuUI.SetActive(true);
             GameIsPaused = true;
         }
     }
 
     public void BackToMainMenu()
     {
+        BackToMainMenuButton.interactable = false;
         Time.timeScale = 1f;
         FindObjectOfType<ScoreManager>().SaveScore();
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(1, "MainMenu"));

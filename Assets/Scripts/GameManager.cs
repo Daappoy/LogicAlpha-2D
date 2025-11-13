@@ -145,8 +145,8 @@ public class GameManager : MonoBehaviour
     public void LostRound()
     {
         AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.AttackSound);
-        currentPlayer.currentHealth -= currentEnemy.damage;
-        // currentPlayer.currentHealth = 0;
+        // currentPlayer.currentHealth -= currentEnemy.damage;
+        currentPlayer.currentHealth = 0;
         if (currentPlayer.currentHealth <= 0) // kalo player mati
         {
             AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.DeathSound);
@@ -164,8 +164,8 @@ public class GameManager : MonoBehaviour
     public void WonRound()
     {
         AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.AttackSound);
-        // currentEnemy.currentHealth -= currentPlayer.damage;
-        currentEnemy.currentHealth = 0;
+        currentEnemy.currentHealth -= currentPlayer.damage;
+        // currentEnemy.currentHealth = 0;
         if (currentEnemy.currentHealth <= 0) // kalo musuh mati
         {
             AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.DeathSound);

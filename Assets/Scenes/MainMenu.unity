@@ -2570,6 +2570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuUI: {fileID: 2120269831}
+  PlayButton: {fileID: 1801931500}
   settingsUI: {fileID: 235987932}
   highScoreText: {fileID: 977139039}
 --- !u!4 &1073644769

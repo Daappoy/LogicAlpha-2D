@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 {
 
     public GameObject mainMenuUI;
+    public Button PlayButton;
     public GameObject settingsUI;
     public TextMeshProUGUI highScoreText;
 
@@ -22,6 +23,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(1, "GameScene"));
+        PlayButton.interactable = false;
     }
 
     public void QuitGame()
