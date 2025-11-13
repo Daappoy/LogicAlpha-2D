@@ -32,11 +32,6 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void SceneLoad(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
-
     public void OpenMainMenu()
     {
         settingsUI.SetActive(false);

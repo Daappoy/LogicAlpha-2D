@@ -8,7 +8,8 @@ public class PauseMenu : MonoBehaviour
     public GameManager.GameState currentState;
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
-    public Button BackToMainMenuButton;
+    public Button[] BackToMainMenuButton;
+    public Button RetryButton;
 
     void Start()
     {
@@ -41,7 +42,10 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        BackToMainMenuButton.interactable = false;
+        foreach (Button button in BackToMainMenuButton)
+        {
+            button.interactable = false;
+        }
         Time.timeScale = 1f;
         FindObjectOfType<ScoreManager>().SaveScore();
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(1, "MainMenu"));
@@ -51,6 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Retry()
     {
+        RetryButton.interactable = false;
         Time.timeScale = 1f;
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(2, "GameScene"));
         Debug.Log("Retrying Game");

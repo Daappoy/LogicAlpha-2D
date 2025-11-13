@@ -4141,7 +4141,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   pauseMenuUI: {fileID: 699736158}
-  BackToMainMenuButton: {fileID: 18010245}
+  BackToMainMenuButton:
+  - {fileID: 18010245}
+  - {fileID: 2146713976}
+  RetryButton: {fileID: 661051992}
 --- !u!114 &1311625638
 MonoBehaviour:
   m_ObjectHideFlags: 0
