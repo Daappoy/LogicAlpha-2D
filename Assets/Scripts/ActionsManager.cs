@@ -81,6 +81,7 @@ public class ActionsManager : MonoBehaviour
         {
             // Player Menang
             ActionResultText.text = "Win!";
+            yield return new WaitForSeconds(1f);
             //animator
             gameManager.WonRound();
         }
@@ -88,8 +89,8 @@ public class ActionsManager : MonoBehaviour
         {
             // Enemy Menang
             ActionResultText.text = "Lose!";
+            yield return new WaitForSeconds(1f);
             gameManager.LostRound();
-            Debug.Log("Enemy wins!");
         }
     }
     
