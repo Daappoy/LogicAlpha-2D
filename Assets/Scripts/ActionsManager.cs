@@ -6,6 +6,7 @@ using TMPro;
 
 public class ActionsManager : MonoBehaviour
 {
+    public AnimatorManager AnimatorManager;
     public GameManager gameManager;
     public Actions playerAction;
     public Actions enemyAction;
@@ -59,6 +60,7 @@ public class ActionsManager : MonoBehaviour
     //ini menentukan kalo playernya menang atau gak
     private IEnumerator ProcessBattleOutcome()
     {
+
         PlayerActionText.text = playerAction.ToString() + "!";
         yield return new WaitForSeconds(1f);
         EnemyActionText.text = enemyAction.ToString() + "!";
@@ -79,26 +81,19 @@ public class ActionsManager : MonoBehaviour
         {
             // Player Menang
             ActionResultText.text = "Win!";
+            //animator
             gameManager.WonRound();
-            // Debug.Log("Player wins!");
-            yield return new WaitForSeconds(1.5f);
-            ResetText();
-            gameManager.currentState = GameManager.GameState.DecidingChoice;
-            ActionButtonOn();
         }
         else
         {
             // Enemy Menang
             ActionResultText.text = "Lose!";
             gameManager.LostRound();
-            // Debug.Log("Enemy wins!");
-            yield return new WaitForSeconds(1.5f);
-            ResetText();
-            ActionButtonOn();
+            Debug.Log("Enemy wins!");
         }
     }
     
-    private void ActionButtonOn()
+    public void ActionButtonOn()
     {
         gameManager.currentState = GameManager.GameState.DecidingChoice;
         gameManager.UpdateUIBasedOnState();

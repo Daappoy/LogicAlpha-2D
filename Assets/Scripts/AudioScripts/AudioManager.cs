@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
 
     public AudioMixer MasterMixer;
     public AudioSource SFXSource;
+    public AudioClip AttackSound;
+    public AudioClip DeathSound;
 
     private void Awake()
     {

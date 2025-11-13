@@ -39,18 +39,18 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        Time.timeScale = 1f;
         FindObjectOfType<ScoreManager>().SaveScore();
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(1, "MainMenu"));
         Debug.Log("Loading Main Menu");
-        Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
     public void Retry()
     {
+        Time.timeScale = 1f;
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(2, "GameScene"));
         Debug.Log("Retrying Game");
-        Time.timeScale = 1f;
         GameIsPaused = false;
     }
 }

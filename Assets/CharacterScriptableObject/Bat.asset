@@ -15,4 +15,4 @@ MonoBehaviour:
   enemyName: Bat
   health: 100
   damage: 10
-  enemyAnimator: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: dc3f99a0db06cfa4fa6ee0834add9240, type: 2}

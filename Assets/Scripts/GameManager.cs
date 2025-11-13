@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SocialPlatforms.Impl;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     public Transform EnemySpawnPoint;
     public Transform PlayerSpawnPoint;
     [Header("Prefabs and script references")]
+    public AnimatorManager AnimatorManager;
     public ScoreManager ScoreManager;
     public ActionsManager ActionsManager;
     public GameObject EnemyPrefab;
@@ -39,8 +41,10 @@ public class GameManager : MonoBehaviour
     public GameObject ActionsUI;
     public GameObject LostUI;
     public TextMeshProUGUI ScoreText;
-    
     public GameState currentState;
+    [Header("Animators")]
+    public Animator PlayerAnimator;
+    public Animator EnemyAnimator;
 
     public void ResetGameStats()
     {
@@ -102,11 +106,16 @@ public class GameManager : MonoBehaviour
             enemyDisplay.damage = randomEnemy.damage;
             currentEnemy = enemyDisplay;
         }
-        
+        //atur rotasi Y biar ngadep ke player
+        enemyInstance.transform.rotation = Quaternion.Euler(transform.rotation.x, 180f, transform.rotation.z);
+
+        EnemyAnimator = enemyInstance.GetComponent<Animator>();
+        AnimatorManager.enemyAnimator = EnemyAnimator;
         currentState = GameState.DecidingChoice;
         UpdateUIBasedOnState();
         UpdateHealthBars();
         ActionsManager.ResetText();
+        enemyDisplay.ApplyEnemyData();
     }
     public void SpawnPlayer()
     {
@@ -117,7 +126,8 @@ public class GameManager : MonoBehaviour
         {
             currentPlayer = playerDisplay;
         }
-        
+        PlayerAnimator = playerInstance.GetComponent<Animator>();
+        AnimatorManager.playerAnimator = PlayerAnimator;
     }
     
     
@@ -134,47 +144,81 @@ public class GameManager : MonoBehaviour
     //proses menang round atau kalah round
     public void LostRound()
     {
+        AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.AttackSound);
         currentPlayer.currentHealth -= currentEnemy.damage;
         // currentPlayer.currentHealth = 0;
-        if (currentPlayer.currentHealth <= 0)
+        if (currentPlayer.currentHealth <= 0) // kalo player mati
         {
-            currentState = GameState.GameOver;
-            UpdateUIBasedOnState();
-
-            currentPlayer.DestroySelf();
-            currentPlayer = null;
+            AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.DeathSound);
+            UpdateHealthBars();
+            StartCoroutine(LostGame());
             return;
         }
-        UpdateHealthBars();
+        else
+        {
+            AnimatorManager.EnemyAttack();
+            AnimatorManager.PlayerHurt();
+            StartCoroutine(ReturnToNormalState());
+        }
     }
-    //kalo musuh mati, actionnya bakal nyala lagi as soon as musuhnya di spawn
     public void WonRound()
     {
-        currentEnemy.currentHealth -= currentPlayer.damage;
-        // currentEnemy.currentHealth = 0;
-        if (currentEnemy.currentHealth <= 0)
+        AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.AttackSound);
+        // currentEnemy.currentHealth -= currentPlayer.damage;
+        currentEnemy.currentHealth = 0;
+        if (currentEnemy.currentHealth <= 0) // kalo musuh mati
         {
+            AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.DeathSound);
             Debug.Log("Enemy Defeated");
             EnemyDefeated += 1;
             ScoreManager.TotalScore += 2000;
             UpdateHealthBars();
             StartCoroutine(NewRound());
-            // action button nyala as soon as enemynya di spawn
             ScoreUpdate();
             return;
         }
-        //kalo musuhnya gak mati, button actionnya langsung nyalain lagi
-        UpdateHealthBars();
+        else
+        {
+            AnimatorManager.PlayerAttack();
+            AnimatorManager.EnemyHurt();
+            StartCoroutine(ReturnToNormalState());
+        }
     }
     public IEnumerator NewRound()
     {
+        AnimatorManager.PlayerAttack();
+        AnimatorManager.EnemyDeath();
+        yield return new WaitForSeconds(1f);
         DestroySpawnedEnemy();
         currentEnemy = null;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         SpawnRandomEnemy();
 
         currentState = GameState.DecidingChoice;
         UpdateUIBasedOnState();
+        ActionsManager.ResetText();
+        ActionsManager.ActionButtonOn();
+        AnimatorManager.PlayerIdle();
+    }
+    public IEnumerator LostGame()
+    {
+        AnimatorManager.EnemyAttack();
+        AnimatorManager.PlayerDeath();
+        yield return new WaitForSeconds(1.5f);
+        currentState = GameState.GameOver;
+        UpdateUIBasedOnState();
+    }
+
+    public IEnumerator ReturnToNormalState()
+    {
+        UpdateHealthBars();
+        yield return new WaitForSeconds(1.5f);
+        currentState = GameState.DecidingChoice;
+        UpdateUIBasedOnState();
+        ActionsManager.ResetText();
+        ActionsManager.ActionButtonOn();
+        AnimatorManager.EnemyIdle();
+        AnimatorManager.PlayerIdle();
     }
 
     [ContextMenu("Update Health Bars")]

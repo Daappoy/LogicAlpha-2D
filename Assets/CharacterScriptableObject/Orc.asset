@@ -15,3 +15,4 @@ MonoBehaviour:
   enemyName: Orc
   health: 100
   damage: 10
+  animatorController: {fileID: 9100000, guid: c7d38fb5c7026c84e83197db667f1dfd, type: 2}

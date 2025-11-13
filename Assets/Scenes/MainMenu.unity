@@ -1801,6 +1801,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterMixer: {fileID: 24100000, guid: 6f846b661542eb74d99cd1cb05649e91, type: 2}
   SFXSource: {fileID: 1328861615}
+  AttackSound: {fileID: 8300000, guid: fd0aac7a6e35fef45849fd4fc33e1bd0, type: 3}
+  DeathSound: {fileID: 8300000, guid: c838df17076f35845b9580b623bc0dcb, type: 3}
 --- !u!4 &976115627
 Transform:
   m_ObjectHideFlags: 0
