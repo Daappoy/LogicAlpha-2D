@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public Slider PlayerHealthBar;
     public Slider EnemyHealthBar;
     [Header("Game UI")]
+    public GameObject StatsUI;
     public GameObject ActionsUI;
     public GameObject LostUI;
     public TextMeshProUGUI ScoreText;
@@ -45,7 +46,13 @@ public class GameManager : MonoBehaviour
     [Header("Animators")]
     public Animator PlayerAnimator;
     public Animator EnemyAnimator;
-
+    [Header("Stats texts")]
+    public TextMeshProUGUI TotalActionsText;
+    public TextMeshProUGUI EnemyDefeatedText;
+    public TextMeshProUGUI ScoreTextUI;
+    public TextMeshProUGUI PaperUsedText;
+    public TextMeshProUGUI RockUsedText;
+    public TextMeshProUGUI ScissorUsedText;
     public void ResetGameStats()
     {
         EnemyDefeated = 0;
@@ -78,6 +85,7 @@ public class GameManager : MonoBehaviour
         if (currentState == GameState.DecidingChoice)
         {
             ActionsUI.SetActive(true);
+            StatsUI.SetActive(true);
         }
         else if (currentState == GameState.Battle)
         {
@@ -88,6 +96,7 @@ public class GameManager : MonoBehaviour
         {
             ActionsUI.SetActive(false);
             LostUI.SetActive(true);
+            StatsUI.SetActive(false);
         }
     }
 
@@ -202,11 +211,21 @@ public class GameManager : MonoBehaviour
     }
     public IEnumerator LostGame()
     {
+        InitiateStatsTexts();
         AnimatorManager.EnemyAttack();
         AnimatorManager.PlayerDeath();
         yield return new WaitForSeconds(1.5f);
         currentState = GameState.GameOver;
         UpdateUIBasedOnState();
+    }
+    private void InitiateStatsTexts()
+    {
+        TotalActionsText.text = "Total Actions: " + (PaperUsed + RockUsed + ScissorUsed).ToString();
+        EnemyDefeatedText.text = "Enemies Defeated: " + EnemyDefeated.ToString();
+        ScoreTextUI.text = "Score: " + ScoreManager.TotalScore.ToString();
+        PaperUsedText.text = "Paper: " + PaperUsed.ToString();
+        RockUsedText.text = "Rock: " + RockUsed.ToString();
+        ScissorUsedText.text = "Scissor: " + ScissorUsed.ToString();
     }
 
     public IEnumerator ReturnToNormalState()
@@ -247,12 +266,4 @@ public class GameManager : MonoBehaviour
     {
         ScoreText.text = "Score: " + ScoreManager.TotalScore.ToString();
     }
-
-    [ContextMenu("Lost Simulation")]
-    public void LostSimulation()
-    {
-        currentState = GameState.GameOver;
-        UpdateUIBasedOnState();
-    }
-
 }
