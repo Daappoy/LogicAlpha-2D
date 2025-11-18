@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDisplay : MonoBehaviour
+public class PlayerDisplay : CharacterDisplay
 {
     public PlayerStats playerStats;
-    public int currentHealth;
-    public int damage;
     void Awake()
     {
         if (playerStats != null)

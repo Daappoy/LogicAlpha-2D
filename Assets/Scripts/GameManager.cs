@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
     public EnemyDisplay currentEnemy;
     public GameObject PlayerPrefab;
     public PlayerDisplay currentPlayer;
-    [Header("UI Health Bars")]
+    [Header("UI Health Bars and Name")]
+    public TextMeshProUGUI EnemyNameText;
     public Slider PlayerHealthBar;
     public Slider EnemyHealthBar;
     [Header("Game UI")]
@@ -105,9 +106,9 @@ public class GameManager : MonoBehaviour
     {
         int randomIndex = UnityEngine.Random.Range(0, Enemies.Count);
         Enemy randomEnemy = Enemies[randomIndex];
-
         GameObject enemyInstance = Instantiate(EnemyPrefab, EnemySpawnPoint.position, Quaternion.identity);
         EnemyDisplay enemyDisplay = enemyInstance.GetComponent<EnemyDisplay>();
+        EnemyNameText.text = randomEnemy.enemyName;
         if (enemyDisplay != null)
         {
             enemyDisplay.enemy = randomEnemy;
@@ -147,6 +148,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(currentEnemy.gameObject);
             currentEnemy = null;
+            EnemyNameText.text = "...";
         }
 
     }
@@ -177,6 +179,7 @@ public class GameManager : MonoBehaviour
         // currentEnemy.currentHealth = 0;
         if (currentEnemy.currentHealth <= 0) // kalo musuh mati
         {
+            
             AudioManager.AudioInstance.PlaySFX(AudioManager.AudioInstance.DeathSound);
             Debug.Log("Enemy Defeated");
             EnemyDefeated += 1;

@@ -1,18 +1,18 @@
 using UnityEngine;
 
-public class EnemyDisplay : MonoBehaviour
+public class EnemyDisplay : CharacterDisplay
 {
     [Header("Assigned Scriptable Object")]
+    public string enemyName;
     public Enemy enemy;
 
     [Header("Runtime Data")]
-    public int currentHealth;
-    public int damage;
     public Animator enemyAnimator;
 
     [ContextMenu("Apply Enemy Data")]
     public void ApplyEnemyData()
     {
+        enemyName = enemy.enemyName;
         currentHealth = enemy.health;
         damage = enemy.damage;
 
