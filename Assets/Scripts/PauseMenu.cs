@@ -53,6 +53,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Retry()
     {
+        FindObjectOfType<ScoreManager>().SaveScore();
         RetryButton.interactable = false;
         Time.timeScale = 1f;
         SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.TransisionToScene(2, "GameScene"));
